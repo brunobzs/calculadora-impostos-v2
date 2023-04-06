@@ -119,7 +119,7 @@ formulario.addEventListener('submit', (evento) => {
 
                 aliquotaEfetiva = (((receitaBruta * aliquota) - pd) / receitaBruta)
                 regime = 'Simples Nacional'
-                simplesNacional = receitaBruta * aliquotaEfetiva/100
+                simplesNacional = (receitaBruta * (aliquotaEfetiva/100))/12
                 guardaValor.push({
                     regime: regime,
                     aliquota: aliquotaEfetiva,
@@ -138,7 +138,7 @@ formulario.addEventListener('submit', (evento) => {
 
                 aliquotaEfetiva = ir + adicionalIR + csll + pis + cofins + iss
                 regime = 'Lucro Presumido'
-                lucroPresumido = (receitaBruta * ir/100) + (receitaBruta * adicionalIR/100) + (receitaBruta * csll/100) + (receitaBruta * pis/100) + (receitaBruta * cofins/100) + (receitaBruta * iss/100)
+                lucroPresumido = ((receitaBruta * (ir/100)) + (receitaBruta * (adicionalIR/100)) + (receitaBruta * (csll/100)) + (receitaBruta * (pis/100)) + (receitaBruta * (cofins/100)) + (receitaBruta * (iss/100)))/4
                 guardaValor.push({
                     regime: regime,
                     aliquota: aliquota,
@@ -153,9 +153,9 @@ formulario.addEventListener('submit', (evento) => {
                 const receitaMensal = receitaBruta / 12
 
                 if (receitaMensal <= 20000) {
-                    lucroReal = (receitaMensal * aliquota/100) + (receitaMensal * csll/100)
+                    lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
                 } else {
-                    lucroReal = (receitaMensal * (aliquota + aliquotaAdicional)/100) + (receitaMensal * csll/100)
+                    lucroReal = (receitaMensal * ((aliquota + aliquotaAdicional)/100)) + (receitaMensal * (csll/100))
                 }
 
                 regime = 'Lucro Real'
@@ -185,6 +185,7 @@ formulario.addEventListener('submit', (evento) => {
                 return melhorOpcao
             }
 
+            console.log(guardaValor)
             const resposta = retornarMelhorOpcao(guardaValor)
 
             if (aliquota === 0) {
