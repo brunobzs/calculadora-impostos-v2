@@ -5,7 +5,7 @@ const resultado = document.querySelector('#resultado')
 formulario.addEventListener('submit', (evento) => {
     evento.preventDefault()
 
-    resultado.innerHTML = "";
+    resultado.innerHTML = ""
 
     const tipoPessoa = document.querySelector('input[name="tipoPessoa"]:checked')
     let faturamento = parseFloat(faturamentoAnual.value.replace(',', '.'))
@@ -191,7 +191,7 @@ formulario.addEventListener('submit', (evento) => {
                 resultado.innerHTML = `<p><b>Você é isento de Imposto de Renda.</b></p>`
             } else {
                 resposta.map(item => {
-                    resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime}, com uma alíquota de ${item.aliquota.toFixed(2)}% e uma média ${item.regime == 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                    resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime}, com uma alíquota de ${item.aliquota.toFixed(2)}% e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
                 })
             }
         }
