@@ -119,7 +119,7 @@ formulario.addEventListener('submit', (evento) => {
 
                 aliquotaEfetiva = (((receitaBruta * aliquota) - pd) / receitaBruta)
                 regime = 'Simples Nacional'
-                simplesNacional = receitaBruta * aliquotaEfetiva/100
+                simplesNacional = (receitaBruta * (aliquotaEfetiva/100))/12
                 guardaValor.push({
                     regime: regime,
                     aliquota: aliquotaEfetiva,
@@ -153,9 +153,9 @@ formulario.addEventListener('submit', (evento) => {
                 const receitaMensal = receitaBruta / 12
 
                 if (receitaMensal <= 20000) {
-                    lucroReal = (receitaMensal * aliquota/100) + (receitaMensal * csll/100)
+                    lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
                 } else {
-                    lucroReal = (receitaMensal * (aliquota + aliquotaAdicional)/100) + (receitaMensal * csll/100)
+                    lucroReal = (receitaMensal * ((aliquota + aliquotaAdicional)/100)) + (receitaMensal * (csll/100))
                 }
 
                 regime = 'Lucro Real'
@@ -185,6 +185,7 @@ formulario.addEventListener('submit', (evento) => {
                 return melhorOpcao
             }
 
+            console.log(guardaValor)
             const resposta = retornarMelhorOpcao(guardaValor)
 
             if (aliquota === 0) {
