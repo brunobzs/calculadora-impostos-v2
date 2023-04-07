@@ -118,8 +118,8 @@ formulario.addEventListener('submit', (evento) => {
                 }
 
                 aliquotaEfetiva = (((receitaBruta * aliquota) - pd) / receitaBruta)
-                regime = 'Simples Nacional'
                 simplesNacional = (receitaBruta * (aliquotaEfetiva/100))/12
+                regime = 'Simples Nacional'
                 guardaValor.push({
                     regime: regime,
                     aliquota: aliquotaEfetiva,
@@ -137,8 +137,8 @@ formulario.addEventListener('submit', (evento) => {
                 let iss = 5
 
                 aliquotaEfetiva = ir + adicionalIR + csll + pis + cofins + iss
-                regime = 'Lucro Presumido'
                 lucroPresumido = ((receitaBruta * (ir/100)) + (receitaBruta * (adicionalIR/100)) + (receitaBruta * (csll/100)) + (receitaBruta * (pis/100)) + (receitaBruta * (cofins/100)) + (receitaBruta * (iss/100)))/4
+                regime = 'Lucro Presumido'
                 guardaValor.push({
                     regime: regime,
                     aliquota: aliquota,
@@ -152,13 +152,11 @@ formulario.addEventListener('submit', (evento) => {
                 const csll = 9
                 const receitaMensal = receitaBruta / 12
 
-                if (receitaMensal <= 20000) {
-                    lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
-                } else {
+                if (receitaMensal > 20000) {
                     aliquota = aliquota + aliquotaAdicional
-                    lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
                 }
 
+                lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
                 regime = 'Lucro Real'
                 guardaValor.push({
                     regime: regime,
