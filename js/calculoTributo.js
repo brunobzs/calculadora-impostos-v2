@@ -128,7 +128,7 @@ formulario.addEventListener('submit', (evento) => {
             }
 
             // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
-            function calculaLucroPresumido (receitaBruta, tipoAtividade) {
+            function calculaLucroPresumido (receitaBruta) {
                 let ir = 4.8
                 let adicionalIR = 10
                 let csll = 9
@@ -147,7 +147,7 @@ formulario.addEventListener('submit', (evento) => {
             }
 
             function calculaLucroReal (receitaBruta) {
-                const aliquota = 15
+                let aliquota = 15
                 const aliquotaAdicional = 10
                 const csll = 9
                 const receitaMensal = receitaBruta / 12
@@ -155,7 +155,8 @@ formulario.addEventListener('submit', (evento) => {
                 if (receitaMensal <= 20000) {
                     lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
                 } else {
-                    lucroReal = (receitaMensal * ((aliquota + aliquotaAdicional)/100)) + (receitaMensal * (csll/100))
+                    aliquota = aliquota + aliquotaAdicional
+                    lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
                 }
 
                 regime = 'Lucro Real'
@@ -168,7 +169,7 @@ formulario.addEventListener('submit', (evento) => {
 
             function retornarMelhorOpcao(opcao) {
                 calculaSimplesNacional(faturamento, atividade)
-                calculaLucroPresumido(faturamento, atividade)
+                calculaLucroPresumido(faturamento)
                 calculaLucroReal(faturamento)
 
                 let menorImposto = opcao.reduce((anterior, atual) => {
@@ -185,14 +186,21 @@ formulario.addEventListener('submit', (evento) => {
                 return melhorOpcao
             }
 
-            console.log(guardaValor)
             const resposta = retornarMelhorOpcao(guardaValor)
 
             if (aliquota === 0) {
                 resultado.innerHTML = `<p><b>Você é isento de Imposto de Renda.</b></p>`
             } else {
+                guardaValor.forEach(item => {
+                    resultado.innerHTML += `<p><b>${item.regime}</b><br>
+                        Alíquota: <b>${item.aliquota.toFixed(2)}%</b></br>
+                        Média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                })
                 resposta.map(item => {
-                    resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime}, com uma alíquota de ${item.aliquota.toFixed(2)}% e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                    resultado.innerHTML += `
+                        <p><b>O melhor regime tributário para você é o ${item.regime},
+                         com uma alíquota de ${item.aliquota.toFixed(2)}% 
+                         e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
                 })
             }
         }
