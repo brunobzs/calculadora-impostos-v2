@@ -61,71 +61,85 @@ formulario.addEventListener('submit', (evento) => {
             let lucroReal = 0
             let guardaValor = []
 
-            function calculaSimplesNacional (receitaBruta, atividade) {
-                switch (true) {
-                    case atividade === 'comercio':
-                        if (receitaBruta <= 180000) {
+            function calculaSimplesNacional (receitaBruta, tipoAtividade) {
+                if (tipoAtividade === 'comercio') {
+                    switch (true) {
+                        case receitaBruta <= 180000:
                             aliquota = 4
                             pd = 0
-                        } else if (receitaBruta <= 360000) {
+                            break
+                        case receitaBruta <= 360000:
                             aliquota = 7.3
                             pd = 5940.00
-                        } else if (receitaBruta <= 720000) {
+                            break
+                        case receitaBruta <= 720000:
                             aliquota = 9.5
                             pd = 13860.00
-                        } else if (receitaBruta <= 1800000) {
+                            break
+                        case receitaBruta <= 1800000:
                             aliquota = 10.7
                             pd = 22500.00
-                        } else if (receitaBruta <= 3600000) {
+                            break
+                        case receitaBruta <= 3600000:
                             aliquota = 14.3
                             pd = 87300.00
-                        } else {
+                            break
+                        default:
                             aliquota = 19
                             pd = 378000.00
-                        }
-                        break
-                    case atividade === 'industria':
-                        if (receitaBruta <= 180000) {
+                    }
+                } else if (tipoAtividade === 'industria') {
+                    switch (true) {
+                        case receitaBruta <= 180000:
                             aliquota = 4.5
                             pd = 0
-                        } else if (receitaBruta <= 360000) {
+                            break
+                        case receitaBruta <= 360000:
                             aliquota = 7.8
                             pd = 5940.00
-                        } else if (receitaBruta <= 720000) {
+                            break
+                        case receitaBruta <= 720000:
                             aliquota = 10
                             pd = 13860.00
-                        } else if (receitaBruta <= 1800000) {
+                            break
+                        case receitaBruta <= 1800000:
                             aliquota = 11.2
                             pd = 22500.00
-                        } else if (receitaBruta <= 3600000) {
+                            break
+                        case receitaBruta <= 3600000:
                             aliquota = 14.7
                             pd = 85500.00
-                        } else {
+                            break
+                        default:
                             aliquota = 30
                             pd = 720000.00
-                        }
-                        break
-                    case atividade === 'servicos':
-                        if (receitaBruta <= 180000) {
+                    }
+                } else if (tipoAtividade === 'servicos') {
+                    switch (true) {
+                        case receitaBruta <= 180000:
                             aliquota = 6
                             pd = 0
-                        } else if (receitaBruta <= 360000) {
+                            break
+                        case receitaBruta <= 360000:
                             aliquota = 11.2
                             pd = 9360.00
-                        } else if (receitaBruta <= 720000) {
+                            break
+                        case receitaBruta <= 720000:
                             aliquota = 13.5
                             pd = 17640.00
-                        } else if (receitaBruta <= 1800000) {
+                            break
+                        case receitaBruta <= 1800000:
                             aliquota = 16
                             pd = 35640.00
-                        } else if (receitaBruta <= 3600000) {
+                            break
+                        case receitaBruta <= 3600000:
                             aliquota = 21
                             pd = 125640.00
-                        } else {
+                            break
+                        default:
                             aliquota = 33
                             pd = 648000.00
-                        }
-                        break
+                    }
                 }
 
                 aliquotaEfetiva = (((receitaBruta * aliquota) - pd) / receitaBruta)
@@ -133,7 +147,7 @@ formulario.addEventListener('submit', (evento) => {
                 regime = 'Simples Nacional'
                 guardaValor.push({
                     regime: regime,
-                    aliquota: aliquotaEfetiva,
+                    aliquota: aliquota,
                     imposto: simplesNacional
                 })
             }
@@ -152,7 +166,7 @@ formulario.addEventListener('submit', (evento) => {
                 regime = 'Lucro Presumido'
                 guardaValor.push({
                     regime: regime,
-                    aliquota: aliquota,
+                    aliquota: aliquotaEfetiva,
                     imposto: lucroPresumido
                 })
             }
