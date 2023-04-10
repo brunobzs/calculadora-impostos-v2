@@ -19,7 +19,7 @@ formulario.addEventListener('submit', (evento) => {
         let regime = ''
 
         if (tipo === 'fisica') {
-            // lógica para pessoa física
+            // Cálculo para pessoa física.
             switch (true) {
                 case faturamento <= 22847.76:
                     aliquota = 0
@@ -50,7 +50,7 @@ formulario.addEventListener('submit', (evento) => {
         }
 
         if (tipo === 'juridica') {
-            // lógica para pessoa jurídica
+            // Cálculo para pessoa jurídica.
             const atividade = document.querySelector('select[name="tipoAtividade"]').value
             let aliquota = 0
             let aliquotaEfetiva = 0
@@ -178,7 +178,7 @@ formulario.addEventListener('submit', (evento) => {
                 let iss = 5
 
                 aliquotaEfetiva = ir + adicionalIR + csll + pis + cofins + iss
-                // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
+                // O calculo ainda não retorna o valor correto do imposto, precisa corrigir a aplicação dos impostos. É necessário rever a lógica.
                 lucroPresumido = ((receitaBruta * (ir/100)) + (receitaBruta * (adicionalIR/100)) + (receitaBruta * (csll/100)) + (receitaBruta * (pis/100)) + (receitaBruta * (cofins/100)) + (receitaBruta * (iss/100)))/4
                 regime = 'Lucro Presumido'
                 guardaValor.push({
