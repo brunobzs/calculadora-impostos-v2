@@ -60,7 +60,16 @@ formulario.addEventListener('submit', (evento) => {
             let lucroReal = 0
             let guardaValor = []
 
+            /**
+             * Calcula o imposto de acordo com o regime tributário Simples Nacional.
+             *
+             * @param { int } receitaBruta - Receita bruta anual da empresa.
+             * @param { string }tipoAtividade - Tipo de atividade da empresa.
+             */
             function calculaSimplesNacional (receitaBruta, tipoAtividade) {
+                // Aliquota - Alíquota do Simples Nacional.
+                // PD - Parcela Dedutível.
+
                 if (tipoAtividade === 'comercio') {
                     switch (true) {
                         case receitaBruta <= 180000:
@@ -155,7 +164,11 @@ formulario.addEventListener('submit', (evento) => {
                 })
             }
 
-            // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
+            /**
+             * Calcula o imposto de acordo com o regime tributário Lucro Real.
+             *
+             * @param { int } receitaBruta - Receita bruta anual da empresa.
+             */
             function calculaLucroPresumido (receitaBruta) {
                 let ir = 4.8
                 let adicionalIR = 10
@@ -165,6 +178,7 @@ formulario.addEventListener('submit', (evento) => {
                 let iss = 5
 
                 aliquotaEfetiva = ir + adicionalIR + csll + pis + cofins + iss
+                // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
                 lucroPresumido = ((receitaBruta * (ir/100)) + (receitaBruta * (adicionalIR/100)) + (receitaBruta * (csll/100)) + (receitaBruta * (pis/100)) + (receitaBruta * (cofins/100)) + (receitaBruta * (iss/100)))/4
                 regime = 'Lucro Presumido'
                 guardaValor.push({
@@ -174,6 +188,11 @@ formulario.addEventListener('submit', (evento) => {
                 })
             }
 
+            /**
+             * Calcula o imposto de acordo com o regime tributário Lucro Real.
+             *
+             * @param { int } receitaBruta - Receita bruta anual da empresa.
+             */
             function calculaLucroReal (receitaBruta) {
                 let aliquota = 15
                 const aliquotaAdicional = 10
@@ -193,6 +212,11 @@ formulario.addEventListener('submit', (evento) => {
                 })
             }
 
+            /**
+             * Retorna a melhor opção de regime tributário.
+             *
+             * @param { array } opcao - Array com os valores de impostos de cada regime tributário.
+             */
             function retornarMelhorOpcao(opcao) {
                 calculaSimplesNacional(faturamento, atividade)
                 calculaLucroPresumido(faturamento)
