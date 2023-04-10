@@ -225,8 +225,7 @@ formulario.addEventListener('submit', (evento) => {
                 })
 
                 resposta.map(item => {
-                    resultado.innerHTML += `
-                        <p><b>O melhor regime tributário para você é o ${item.regime},
+                    resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime},
                          com uma alíquota de ${item.aliquota.toFixed(2)}% 
                          e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
                 })
