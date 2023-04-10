@@ -139,7 +139,7 @@ function calculaLucroPresumido (receitaBruta) {
     lucroPresumido = ((receitaBruta * (ir/100)) + (receitaBruta * (adicionalIR/100)) + (receitaBruta * (csll/100)) + (receitaBruta * (pis/100)) + (receitaBruta * (cofins/100)) + (receitaBruta * (iss/100)))/4
     guardaValor.push({
         regime: regime,
-        aliquota: aliquota,
+        aliquota: aliquotaEfetiva,
         imposto: lucroPresumido
     })
 }
@@ -214,12 +214,9 @@ formulario.addEventListener('submit', (evento) => {
         resultado.innerHTML = '<p><b>Por favor, insira um valor válido no campo Faturamento Anual.</b></p>'
     } else {
         if (tipo === 'fisica') {
-            // lógica para pessoa física
             return calculaIRPF(faturamento)
         }
-
         if (tipo === 'juridica') {
-            // lógica para pessoa jurídica
             const atividade = document.querySelector('select[name="tipoAtividade"]').value
 
             calculaSimplesNacional(faturamento, atividade)
