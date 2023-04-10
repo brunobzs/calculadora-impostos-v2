@@ -88,7 +88,9 @@ formulario.addEventListener('submit', (evento) => {
                             aliquota = 19
                             pd = 378000.00
                     }
-                } else if (tipoAtividade === 'industria') {
+                }
+
+                if (tipoAtividade === 'industria') {
                     switch (true) {
                         case receitaBruta <= 180000:
                             aliquota = 4.5
@@ -114,7 +116,9 @@ formulario.addEventListener('submit', (evento) => {
                             aliquota = 30
                             pd = 720000.00
                     }
-                } else if (tipoAtividade === 'servicos') {
+                }
+
+                if (tipoAtividade === 'servicos') {
                     switch (true) {
                         case receitaBruta <= 180000:
                             aliquota = 6
@@ -219,6 +223,7 @@ formulario.addEventListener('submit', (evento) => {
                         Alíquota: <b>${item.aliquota.toFixed(2)}%</b></br>
                         Média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
                 })
+
                 resposta.map(item => {
                     resultado.innerHTML += `
                         <p><b>O melhor regime tributário para você é o ${item.regime},
