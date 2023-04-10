@@ -47,7 +47,6 @@ formulario.addEventListener('submit', (evento) => {
             } else {
                 resultado.innerHTML = `<p><b>A sua alíquota de imposto de renda é de ${aliquota}% e o valor médio de imposto de renda é de R$${media.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}.</b></p>`
             }
-
         }
 
         if (tipo === 'juridica') {
