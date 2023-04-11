@@ -23,6 +23,13 @@ let descontoPJ = 0
 let ganhosLiquidos = 0
 
 
+/**
+ * Função que calcula o salário líquido no formato CLT.
+ *
+ * @param { int } salarioBruto - Salário bruto mensal ou anual.
+ * @param { string } tipo - Tipo de salário (por-mes ou por-ano).
+ * @returns {string} - Retorna o resultado do cálculo.
+ */
 function calculaSalarioCLT(salarioBruto, tipo) {
     salario = salarioBruto
 
@@ -81,6 +88,13 @@ function calculaSalarioCLT(salarioBruto, tipo) {
         '<center><hr size="50"></center>'
 }
 
+/**
+ * Calcula o salário no regime de pessoa jurídica.
+ *
+ * @param { int } faturamento - Receita bruta anual.
+ * @param { string } tipo - Tipo de faturamento (por-mes ou por-ano).
+ * @returns {string} - Retorna o resultado do cálculo.
+ */
 function calculaSalarioPJ(faturamento, tipo) {
     receitaBruta = faturamento
 
