@@ -16,3 +16,17 @@ footer {
     align-items: center;
     gap: 10px;
 }
+
+.galery-container {
+    margin-bottom: 100px;
+}
+
+.galeria-imagem {
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+.galeria-imagem:hover {
+    border-color: #888;
+    transform: scale(1.03);
+}

@@ -79,9 +79,9 @@ function calculaSalarioCLT(salarioBruto, tipo) {
         '<br>(+) 13º com descontos: R$ ' + salarioLiquido.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
         '<br> -----------------------------------------' +
         '<br>(=) Resultado: ' +
-        '<br>R$ ' + salarioLiquido.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
+        'R$ ' + salarioLiquido.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
         ' + R$ ' + totalBeneficios.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' de benefícios' +
-        ' ou R$ ' + ((salarioLiquido * 12) + totalBeneficios).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
+        ', um total de R$ ' + ((salarioLiquido * 12) + totalBeneficios).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano. </p>' +
         '<center><hr size="50"></center>'
 }
 
@@ -122,7 +122,7 @@ function calculaSalarioPJ(faturamento, tipo) {
         `<br>(-) Simples Nacional (${(aliquotaEfetiva * 100).toFixed(2)}%): R$ ` + (descontoPJ / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
         '<br> -----------------------------------------' +
         '<br>(=) Resultado: R$ ' + (ganhosLiquidos/12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
-        ' ou R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
+        ' um total de R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano. </p>' +
         '<br><p>* Para cálculo do PJ são utilizadas as aliquotas do Anexo V do Simples Nacional: aqui estão inseridas as empresas que prestam serviços de auditoria, jornalismo, tecnologia, publicidade, engenharia, entre outras.</p>'
 }
 
