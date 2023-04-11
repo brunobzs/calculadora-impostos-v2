@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Impostos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand ml-5" href="index.html">Você Calculando</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mr-5" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="projeto.html">Projeto</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="mailto:brunobzs@gmail.com">Contato</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<header class="bg-primary py-5">
+    <div class="container">
+        <h1 class="text-white">Calculadora de Impostos</h1>
+        <p class="lead text-white">Descubra quanto você ou sua empresa deve pagar de impostos e qual é o melhor regime tributário para a sua empresa.</p>
+    </div>
+</header>
+<section class="py-5">
+    <div class="container">
+        <form id="formulario">
+            <div class="form-group">
+                <label for="tipoPessoa">Tipo de Pessoa</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPessoa" id="fisica" value="fisica" checked>
+                    <label class="form-check-label" for="fisica">
+                        Pessoa Física
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPessoa" id="juridica" value="juridica">
+                    <label class="form-check-label" for="juridica">
+                        Pessoa Jurídica
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group tipo-juridica">
+                <label for="tipoAtividade">Tipo de Atividade</label>
+                <select class="form-control" id="tipoAtividade" name="tipoAtividade">
+                    <option value="comercio">Comércio</option>
+                    <option value="servicos">Serviços</option>
+                    <option value="industria">Indústria</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="faturamento">Faturamento Anual</label>
+                <input type="number" class="form-control" id="faturamento" name="faturamento" placeholder="R$ 0,00">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Calcular Impostos</button>
+            </div>
+            <div class="form-group" id="aliquota-container" style="display: none;">
+                <label for="aliquota-irpf">Alíquota:</label>
+                <input type="text" class="form-control" id="aliquota-irpf" readonly>
+            </div>
+            <div class="form-group" id="imposto-container" style="display: none;">
+                <label for="imposto-irpf">Imposto a pagar:</label>
+                <input type="text" class="form-control" id="imposto-irpf" readonly>
+            </div>
+            <div id="resultado" ></div>
+            <p>*O valor do imposto pode mudar de acordo com as despesas dedutíveis e do regime tributário escolhido. Para uma apuração mais precisa, é recomendado consultar um contador.</p>
+        </form>
+    </div>
+</section>
+
+<footer class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-left">
+                <p>Desenvolvido por <strong>Bruno Carvalho</strong></p>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <a href="https://www.linkedin.com/in/brunocarvalhoeng/" target="_blank" class="mr-3">
+                    <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/svgs/brands/linkedin.svg" alt="LinkedIn" width="30" height="30">
+                </a>
+                <a href="https://github.com/brunobzs" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/svgs/brands/github.svg" alt="GitHub" width="30" height="30">
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/calculoTributo.js"></script>
+</body>
+</html>
