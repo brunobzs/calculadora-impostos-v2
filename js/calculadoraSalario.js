@@ -9,7 +9,6 @@ let ir = 0
 let salarioLiquido = 0
 let descontoINSS = 0
 let descontoIR = 0
-let decimoTerceiroSal = 0
 let umTercoFerias = 0
 let descontoIRFerias = 0
 let descontoINSSFerias = 0
@@ -65,7 +64,7 @@ function calculaSalarioCLT(salarioBruto, tipo) {
     descontoIRFerias = umTercoFerias * ir
     descontoINSSFerias = umTercoFerias * inss
     umTercoFeriasLiquido = umTercoFerias - descontoIRFerias - descontoINSSFerias
-    totalBeneficios = umTercoFeriasLiquido + decimoTerceiroSal
+    totalBeneficios = umTercoFeriasLiquido + salarioLiquido
 
     return resultado.innerHTML += '<p><h3>Contrato - CLT</h3></p>' +
         '<p>Salário Bruto Mensal: R$ ' + salario.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
