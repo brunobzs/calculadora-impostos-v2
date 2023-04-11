@@ -12,36 +12,6 @@ let guardaValor = []
 
 
 /**
- * Função que calcula o imposto de renda de pessoa física.
- *
- * @param { int } faturamento - Recebe o valor do faturamento anual.
- * @returns { string } - Retorna o valor do imposto de renda.
- */
-function calculaIRPF (faturamento) {
-    let irrf = 0
-
-    if (faturamento <= 22847.76) {
-        return resultado.innerHTML = `<p><b>Você é isento de Imposto de Renda.</b></p>`
-    } else if (faturamento <= 33919.80) {
-        aliquota = 7.5
-        pd = 1713.58
-    } else if (faturamento <= 45012.60) {
-        aliquota = 15
-        pd = 4257.57
-    } else if (faturamento <= 55976.16) {
-        aliquota = 22.5
-        pd = 7633.51
-    } else {
-        aliquota = 27.5
-        pd = 10432.32
-    }
-
-    irrf = (faturamento * aliquota) / 100 - pd
-
-    return resultado.innerHTML = `<p><b>A sua alíquota de imposto de renda é de ${aliquota}% e o valor médio de mensal do imposto de renda é de R$${irrf.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}.</b></p>`
-}
-
-/**
  * Calcula o imposto de renda de pessoa jurídica no regime tributário do Simples Nacional.
  *
  * @param { int } receitaBruta - Recebe o valor da receita bruta anual.
@@ -205,7 +175,6 @@ formulario.addEventListener('submit', (evento) => {
 
     const tipoPessoa = document.querySelector('input[name="tipoPessoa"]:checked')
     let faturamento = parseFloat(faturamentoAnual.value.replace(',', '.'))
-    let tipo = tipoPessoa.value
 
     guardaValor = []
     resultado.innerHTML = ""
@@ -213,17 +182,12 @@ formulario.addEventListener('submit', (evento) => {
     if (isNaN(faturamento)) {
         resultado.innerHTML = '<p><b>Por favor, insira um valor válido no campo Faturamento Anual.</b></p>'
     } else {
-        if (tipo === 'fisica') {
-            return calculaIRPF(faturamento)
-        }
-        if (tipo === 'juridica') {
-            const atividade = document.querySelector('select[name="tipoAtividade"]').value
+        const atividade = document.querySelector('select[name="tipoAtividade"]').value
 
-            calculaSimplesNacional(faturamento, atividade)
-            calculaLucroPresumido(faturamento)
-            calculaLucroReal(faturamento)
+        calculaSimplesNacional(faturamento, atividade)
+        calculaLucroPresumido(faturamento)
+        calculaLucroReal(faturamento)
 
-            return retornarMelhorOpcao(guardaValor)
-        }
+        return retornarMelhorOpcao(guardaValor)
     }
 })
