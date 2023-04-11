@@ -1,6 +1,8 @@
 const formulario = document.querySelector('#formulario')
 const faturamentoAnual = document.querySelector('input[name="faturamento"]')
 const resultado = document.querySelector('#resultado')
+
+// Variáveis globais
 let aliquota = 0
 let aliquotaEfetiva = 0
 let pd = 0
