@@ -24,7 +24,7 @@ let ganhosLiquidos = 0
 
 
 /**
- * Função que calcula o salário líquido no formato CLT.
+ * Calcula o salário líquido no formato CLT.
  *
  * @param { int } salarioBruto - Salário bruto mensal ou anual.
  * @param { string } tipo - Tipo de salário (por-mes ou por-ano).
