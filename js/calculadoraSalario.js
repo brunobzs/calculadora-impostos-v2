@@ -122,7 +122,7 @@ function calculaSalarioPJ(faturamento, tipo) {
         `<br>(-) Simples Nacional (${(aliquotaEfetiva * 100).toFixed(2)}%): R$ ` + (descontoPJ / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
         '<br> -----------------------------------------' +
         '<br>(=) Resultado: R$ ' + (ganhosLiquidos/12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
-        ' um total de R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano. </p>' +
+        ' ou R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
         '<br><p>* Para cálculo do PJ são utilizadas as aliquotas do Anexo V do Simples Nacional: aqui estão inseridas as empresas que prestam serviços de auditoria, jornalismo, tecnologia, publicidade, engenharia, entre outras.</p>'
 }
 
