@@ -4,6 +4,7 @@ const resultado = document.querySelector('#resultado')
 
 
 // Variáveis globais para o cálculo de CLT.
+let salario
 let inss = 0
 let ir = 0
 let salarioLiquido = 0
@@ -14,6 +15,7 @@ let descontoIRFerias = 0
 let descontoINSSFerias = 0
 
 // Variáveis globais para o cálculo de CLT.
+let receitaBruta = 0
 let aliquota = 0
 let pd = 0
 let aliquotaEfetiva = 0
@@ -22,7 +24,7 @@ let ganhosLiquidos = 0
 
 
 function calculaSalarioCLT(salarioBruto, tipo) {
-    let salario = salarioBruto
+    salario = salarioBruto
 
     if (tipo === 'por-ano') {
         salario = salario / 12
@@ -31,11 +33,9 @@ function calculaSalarioCLT(salarioBruto, tipo) {
     // Retorna a aliquota e INSS.
     if (salario <= 1302.00) {
         inss = 0.075
-    }
-    if (salario <= 2571.29) {
+    } else if (salario <= 2571.29) {
         inss = 0.09
-    }
-    if (salario <= 3856.94) {
+    } else if (salario <= 3856.94) {
         inss = 0.12
     } else {
         inss = 0.14
@@ -44,14 +44,11 @@ function calculaSalarioCLT(salarioBruto, tipo) {
     //Retorna a aliquota do IR.
     if (salario <= 1903.98) {
         ir = 0
-    }
-    if (salario <= 2826.65) {
+    } else if (salario <= 2826.65) {
         ir = 0.075
-    }
-    if (salario <= 3751.05) {
+    } else if (salario <= 3751.05) {
         ir = 0.15
-    }
-    if (salario <= 4664.68) {
+    } else if (salario <= 4664.68) {
         ir = 0.225
     } else {
         ir = 0.275
@@ -79,13 +76,13 @@ function calculaSalarioCLT(salarioBruto, tipo) {
         '<br> -----------------------------------------' +
         '<br>(=) Resultado: ' +
         'R$ ' + salarioLiquido.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
-        ' + R$ ' + totalBeneficios.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' de benefícios' +
+        ' + R$ ' + totalBeneficios.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' de férias e 13º' +
         ', um total de R$ ' + ((salarioLiquido * 12) + totalBeneficios).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano. </p>' +
         '<center><hr size="50"></center>'
 }
 
 function calculaSalarioPJ(faturamento, tipo) {
-    let receitaBruta = faturamento
+    receitaBruta = faturamento
 
     if (tipo === 'por-mes') {
         receitaBruta = receitaBruta * 12
@@ -122,8 +119,9 @@ function calculaSalarioPJ(faturamento, tipo) {
         '<br> -----------------------------------------' +
         '<br>(=) Resultado: R$ ' + (ganhosLiquidos/12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
         ' ou R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
-        '<br><p>* Para cálculo do PJ são utilizadas as aliquotas do Anexo V do Simples Nacional: aqui estão inseridas as empresas que prestam serviços de auditoria, jornalismo, tecnologia, publicidade, engenharia, entre outras.</p>'
+        '<br><p><i>* Para cálculo do PJ são utilizadas as aliquotas do Anexo V do Simples Nacional: aqui estão inseridas as empresas que prestam serviços de auditoria, jornalismo, tecnologia, publicidade, engenharia, entre outras.</i></p>'
 }
+
 
 formulario.addEventListener('submit', (e) => {
     e.preventDefault()
