@@ -22,62 +22,62 @@ let guardaValor = []
 function calculaSimplesNacional (receitaBruta, tipoAtividade) {
     if (tipoAtividade === 'comercio') {
         if (receitaBruta <= 180000) {
-            aliquota = 4
+            aliquota = 0.04
             pd = 0
         } else if (receitaBruta <= 360000) {
-            aliquota = 7.3
+            aliquota = 0.073
             pd = 5940.00
         } else if (receitaBruta <= 720000) {
-            aliquota = 9.5
+            aliquota = 0.095
             pd = 13860.00
         } else if (receitaBruta <= 1800000) {
-            aliquota = 10.7
+            aliquota = 0.107
             pd = 22500.00
         } else if (receitaBruta <= 3600000) {
-            aliquota = 14.3
+            aliquota = 0.143
             pd = 87300.00
         } else {
-            aliquota = 19
+            aliquota = 0.19
             pd = 378000.00
         }
     } else if (tipoAtividade === 'industria') {
         if (receitaBruta <= 180000) {
-            aliquota = 4.5
+            aliquota = 0.045
             pd = 0
         } else if (receitaBruta <= 360000) {
-            aliquota = 7.8
+            aliquota = 0.078
             pd = 5940.00
         } else if (receitaBruta <= 720000) {
-            aliquota = 10
+            aliquota = 0.1
             pd = 13860.00
         } else if (receitaBruta <= 1800000) {
-            aliquota = 11.2
+            aliquota = 0.112
             pd = 22500.00
         } else if (receitaBruta <= 3600000) {
-            aliquota = 14.7
+            aliquota = 0.147
             pd = 85500.00
         } else {
-            aliquota = 30
+            aliquota = 0.3
             pd = 720000.00
         }
     } else if (tipoAtividade === 'servicos') {
         if (receitaBruta <= 180000) {
-            aliquota = 6
+            aliquota = 0.06
             pd = 0
         } else if (receitaBruta <= 360000) {
-            aliquota = 11.2
+            aliquota = 0.112
             pd = 9360.00
         } else if (receitaBruta <= 720000) {
-            aliquota = 13.5
+            aliquota = 0.135
             pd = 17640.00
         } else if (receitaBruta <= 1800000) {
-            aliquota = 16
+            aliquota = 0.16
             pd = 35640.00
         } else if (receitaBruta <= 3600000) {
-            aliquota = 21
+            aliquota = 0.21
             pd = 125640.00
         } else {
-            aliquota = 33
+            aliquota = 0.33
             pd = 648000.00
         }
     }
@@ -95,20 +95,29 @@ function calculaSimplesNacional (receitaBruta, tipoAtividade) {
 /**
  * Calcula o imposto de renda de pessoa jurídica no regime tributário do Lucro Presumido.
  *
- * @param { int } receitaBruta - Recebe o valor da receita bruta anual.
+ * @param { object } param
+ * @param { int } param.receitaBruta - Recebe o valor da receita bruta anual.
+ * @param { boolean } param.naoCumulativo - Recebe o valor true ou false para saber se a empresa é do regime não cumulativo.
  */
-function calculaLucroPresumido (receitaBruta) {
-    const ir = 4.8
-    const adicionalIR = 10
-    const csll = 9
-    const pis = 0.65
-    const cofins = 3
-    const iss = 5
+function calculaLucroPresumido ({ receitaBruta, naoCumulativo = false }) {
+    const ir = 0.048
+    const adicionalIR = 0.1
+    const csll = 0.09
+    const iss = 0.05
+    const irpj = 0.08
+    let pis = 0.0065
+    let cofins = 0.03
+
+    if (naoCumulativo) {
+        pis = 0.0165
+        cofins = 0.076
+    }
 
     aliquotaEfetiva = ir + adicionalIR + csll + pis + cofins + iss
     regime = 'Lucro Presumido'
     // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
-    lucroPresumido = ((receitaBruta * (ir/100)) + (receitaBruta * (adicionalIR/100)) + (receitaBruta * (csll/100)) + (receitaBruta * (pis/100)) + (receitaBruta * (cofins/100)) + (receitaBruta * (iss/100)))/4
+    lucroPresumido = ((receitaBruta * ir) + (receitaBruta * adicionalIR) + (receitaBruta * csll) + (receitaBruta * pis)
+        + (receitaBruta * cofins) + (receitaBruta * iss) + (receitaBruta * irpj))/4
     guardaValor.push({
         regime: regime,
         aliquota: aliquotaEfetiva,
@@ -123,9 +132,9 @@ function calculaLucroPresumido (receitaBruta) {
  * @returns {number} - Retorna o valor do imposto de renda de pessoa jurídica no regime tributário do Lucro Real.
  */
 function calculaLucroReal (receitaBruta) {
-    aliquota = 15
-    const aliquotaAdicional = 10
-    const csll = 9
+    aliquota = 0.15
+    const aliquotaAdicional = 0.10
+    const csll = 0.9
     const receitaMensal = receitaBruta / 12
 
     if (receitaMensal > 200000) {
@@ -187,7 +196,11 @@ formulario.addEventListener('submit', (evento) => {
         const atividade = document.querySelector('select[name="tipoAtividade"]').value
 
         calculaSimplesNacional(faturamento, atividade)
-        calculaLucroPresumido(faturamento)
+        calculaLucroPresumido({faturamento: faturamento})
+        calculaLucroPresumido({
+            faturamento: faturamento,
+            naoCumulativo: true
+        })
         calculaLucroReal(faturamento)
 
         return retornarMelhorOpcao(guardaValor)
