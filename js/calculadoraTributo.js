@@ -87,7 +87,7 @@ function calculaSimplesNacional (receitaBruta, tipoAtividade) {
     simplesNacional = (receitaBruta * (aliquotaEfetiva))/12
     guardaValor.push({
         regime: regime,
-        aliquota: aliquotaEfetiva,
+        aliquota: aliquotaEfetiva * 100,
         imposto: simplesNacional
     })
 }
@@ -114,7 +114,7 @@ function calculaLucroPresumido ({ receitaBruta, naoCumulativo = false }) {
     if (naoCumulativo) {
         pis = 0.0165
         cofins = 0.076
-        regime = 'Lucro Presumido - Não Cumulativo'
+            regime = 'Lucro Presumido - Não Cumulativo'
     }
 
     // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
@@ -122,7 +122,7 @@ function calculaLucroPresumido ({ receitaBruta, naoCumulativo = false }) {
         + (receitaBruta * cofins) + (receitaBruta * iss) + (receitaBruta * irpj))/4
     guardaValor.push({
         regime: regime,
-        aliquota: aliquotaEfetiva,
+        aliquota: aliquotaEfetiva * 100,
         imposto: lucroPresumido
     })
 }
@@ -147,7 +147,7 @@ function calculaLucroReal (receitaBruta) {
     regime = 'Lucro Real'
     guardaValor.push({
         regime: regime,
-        aliquota: aliquota,
+        aliquota: aliquota * 100,
         imposto: lucroReal
     })
 }
@@ -172,13 +172,13 @@ function retornarMelhorOpcao(opcao) {
     guardaValor.forEach(item => {
         resultado.innerHTML += `<p><b>${item.regime}</b><br>
                         Alíquota: <b>${item.aliquota.toFixed(2)}%</b></br>
-                        Média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                        Média ${item.regime === 'Lucro Presumido' || 'Lucro Presumido - Não Cumulativo' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
     })
 
     melhorOpcao.map(item => {
         resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime},
                          com uma alíquota de ${item.aliquota.toFixed(2)}% 
-                         e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                         e uma média ${item.regime === 'Lucro Presumido' || 'Lucro Presumido - Não Cumulativo' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
     })
 }
 
@@ -198,9 +198,9 @@ formulario.addEventListener('submit', (evento) => {
         const atividade = document.querySelector('select[name="tipoAtividade"]').value
 
         calculaSimplesNacional(faturamento, atividade)
-        calculaLucroPresumido({faturamento: faturamento})
+        calculaLucroPresumido({receitaBruta: faturamento})
         calculaLucroPresumido({
-            faturamento: faturamento,
+            receitaBruta: faturamento,
             naoCumulativo: true
         })
         calculaLucroReal(faturamento)
