@@ -84,7 +84,7 @@ function calculaSimplesNacional (receitaBruta, tipoAtividade) {
 
     aliquotaEfetiva = (((receitaBruta * aliquota) - pd) / receitaBruta)
     regime = 'Simples Nacional'
-    simplesNacional = (receitaBruta * (aliquotaEfetiva/100))/12
+    simplesNacional = (receitaBruta * (aliquotaEfetiva))/12
     guardaValor.push({
         regime: regime,
         aliquota: aliquotaEfetiva,
@@ -143,7 +143,7 @@ function calculaLucroReal (receitaBruta) {
         return aliquota = aliquota + aliquotaAdicional
     }
 
-    lucroReal = (receitaMensal * (aliquota/100)) + (receitaMensal * (csll/100))
+    lucroReal = (receitaMensal * (aliquota)) + (receitaMensal * (csll))
     regime = 'Lucro Real'
     guardaValor.push({
         regime: regime,
