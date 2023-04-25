@@ -143,7 +143,7 @@ function calculaLucroReal (receitaBruta) {
         return aliquota = aliquota + aliquotaAdicional
     }
 
-    lucroReal = (receitaMensal * (aliquota)) + (receitaMensal * (csll))
+    lucroReal = (receitaMensal * aliquota) + (receitaMensal * csll)
     regime = 'Lucro Real'
     guardaValor.push({
         regime: regime,
