@@ -14,7 +14,7 @@ let umTercoFerias = 0
 let descontoIRFerias = 0
 let descontoINSSFerias = 0
 
-// Variáveis globais para o cálculo de CLT.
+// Variáveis globais para o cálculo de PJ.
 let receitaBruta = 0
 let aliquota = 0
 let pd = 0
