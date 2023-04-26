@@ -16,10 +16,11 @@ let guardaValor = []
 /**
  * Calcula o imposto de renda de pessoa jurídica no regime tributário do Simples Nacional.
  *
- * @param { int } receitaBruta - Recebe o valor da receita bruta anual.
- * @param { string } tipoAtividade - Recebe o tipo de atividade da empresa.
+ * @param { object } param
+ * @param { int } param.receitaBruta - Recebe o valor da receita bruta anual.
+ * @param { string } param.tipoAtividade - Recebe o tipo de atividade da empresa.
  */
-function calculaSimplesNacional (receitaBruta, tipoAtividade) {
+function calculaSimplesNacional ({ receitaBruta, tipoAtividade }) {
     if (tipoAtividade === 'comercio') {
         if (receitaBruta <= 180000) {
             aliquota = 0.04
@@ -172,13 +173,13 @@ function retornarMelhorOpcao(opcao) {
     guardaValor.forEach(item => {
         resultado.innerHTML += `<p><b>${item.regime}</b><br>
                         Alíquota: <b>${item.aliquota.toFixed(2)}%</b></br>
-                        Média ${item.regime === 'Lucro Presumido' || 'Lucro Presumido - Não Cumulativo' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                        Média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
     })
 
     melhorOpcao.map(item => {
         resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime},
                          com uma alíquota de ${item.aliquota.toFixed(2)}% 
-                         e uma média ${item.regime === 'Lucro Presumido' || 'Lucro Presumido - Não Cumulativo' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+                         e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
     })
 }
 
@@ -186,7 +187,6 @@ function retornarMelhorOpcao(opcao) {
 formulario.addEventListener('submit', (evento) => {
     evento.preventDefault()
 
-    const tipoPessoa = document.querySelector('input[name="tipoPessoa"]:checked')
     let faturamento = parseFloat(faturamentoAnual.value.replace(',', '.'))
 
     guardaValor = []
@@ -197,8 +197,11 @@ formulario.addEventListener('submit', (evento) => {
     } else {
         const atividade = document.querySelector('select[name="tipoAtividade"]').value
 
-        calculaSimplesNacional(faturamento, atividade)
-        calculaLucroPresumido({receitaBruta: faturamento})
+        calculaSimplesNacional({
+            receitaBruta: faturamento,
+            tipoAtividade: atividade
+        })
+        calculaLucroPresumido({ receitaBruta: faturamento })
         calculaLucroPresumido({
             receitaBruta: faturamento,
             naoCumulativo: true
