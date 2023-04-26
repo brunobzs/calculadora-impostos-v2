@@ -108,6 +108,7 @@ function calculaLucroPresumido ({ receitaBruta, naoCumulativo = false }) {
     const irpj = 0.08
     let pis = 0.0065
     let cofins = 0.03
+    let divisor = 4
 
     aliquotaEfetiva = ir + adicionalIR + csll + pis + cofins + iss
     regime = 'Lucro Presumido'
@@ -115,12 +116,13 @@ function calculaLucroPresumido ({ receitaBruta, naoCumulativo = false }) {
     if (naoCumulativo) {
         pis = 0.0165
         cofins = 0.076
-            regime = 'Lucro Presumido - Não Cumulativo'
+        regime = 'Lucro Presumido - Não Cumulativo'
+        divisor = 12
     }
 
     // O calculo não retorna ainda o valor correto do imposto, precisa corrigir o cálculo e a aplicação dos impostos. Necessário rever a lógica.
     lucroPresumido = ((receitaBruta * ir) + (receitaBruta * adicionalIR) + (receitaBruta * csll) + (receitaBruta * pis)
-        + (receitaBruta * cofins) + (receitaBruta * iss) + (receitaBruta * irpj))/4
+        + (receitaBruta * cofins) + (receitaBruta * iss) + (receitaBruta * irpj))/divisor
     guardaValor.push({
         regime: regime,
         aliquota: aliquotaEfetiva * 100,
