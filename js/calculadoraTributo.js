@@ -6,6 +6,7 @@ const resultado = document.querySelector('#resultado')
 let aliquota = 0
 let aliquotaEfetiva = 0
 let pd = 0
+let mei = 0
 let simplesNacional = 0
 let lucroPresumido = 0
 let lucroReal = 0
@@ -14,7 +15,42 @@ let guardaValor = []
 
 
 /**
- * Calcula o imposto de renda de pessoa jurídica no regime tributário do Simples Nacional.
+ * Calcula o imposto de pessoa jurídica no regime tributário do MEI.
+ *
+ * @param { object } param
+ * @param { int } param.receitaBruta - Recebe o valor da receita bruta anual.
+ * @param { string } param.tipoAtividade - Recebe o tipo de atividade da empresa.
+ */
+function calculaMei ({receitaBruta, tipoAtividade}) {
+    let inss = 0
+    let iss = 0
+    let icms = 0
+
+    if (receitaBruta <= 81000) {
+        if (tipoAtividade = 'comercio') {
+            inss = 66.00
+            icms = 1.00
+            iss = 5.00
+        } else if (tipoAtividade = 'servicos') {
+            inss = 66.00
+            iss = 5.00
+        } else if (tipoAtividade = 'industria') {
+            inss = 66.00
+            iss = 1.00
+        }
+
+        regime = 'MEI'
+        mei = inss + icms + iss
+        guardaValor.push({
+            regime: regime,
+            aliquota: 0,
+            imposto: mei
+        })
+    }
+}
+
+/**
+ * Calcula o imposto de pessoa jurídica no regime tributário do Simples Nacional.
  *
  * @param { object } param
  * @param { int } param.receitaBruta - Recebe o valor da receita bruta anual.
@@ -94,7 +130,7 @@ function calculaSimplesNacional ({ receitaBruta, tipoAtividade }) {
 }
 
 /**
- * Calcula o imposto de renda de pessoa jurídica no regime tributário do Lucro Presumido.
+ * Calcula o imposto de pessoa jurídica no regime tributário do Lucro Presumido.
  *
  * @param { object } param
  * @param { int } param.receitaBruta - Recebe o valor da receita bruta anual.
@@ -131,7 +167,7 @@ function calculaLucroPresumido ({ receitaBruta, naoCumulativo = false }) {
 }
 
 /**
- * Calcula o imposto de renda de pessoa jurídica no regime tributário do Lucro Real.
+ * Calcula o imposto de pessoa jurídica no regime tributário do Lucro Real.
  *
  * @param { int } receitaBruta - Recebe o valor da receita bruta anual.
  * @returns {number} - Retorna o valor do imposto de renda de pessoa jurídica no regime tributário do Lucro Real.
@@ -173,15 +209,24 @@ function retornarMelhorOpcao(opcao) {
     })
 
     guardaValor.forEach(item => {
-        resultado.innerHTML += `<p><b>${item.regime}</b><br>
+        if (item.regime === 'MEI') {
+            resultado.innerHTML += `<p><b>${item.regime}</b><br>
+                        Contribuição mensal: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+        } else {
+            resultado.innerHTML += `<p><b>${item.regime}</b><br>
                         Alíquota: <b>${item.aliquota.toFixed(2)}%</b></br>
                         Média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto: <b>R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+        }
     })
 
     melhorOpcao.map(item => {
-        resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime},
+        if (item.regime === 'MEI') {
+            resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime} e uma contribuição ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+        } else {
+            resultado.innerHTML += `<p><b>O melhor regime tributário para você é o ${item.regime},
                          com uma alíquota de ${item.aliquota.toFixed(2)}% 
                          e uma média ${item.regime === 'Lucro Presumido' ? 'trimestral' : 'mensal'} de imposto de R$${item.imposto.toLocaleString('pt-br', {minimumFractionDigits: 2, maximumFractionDigits: 2})}.</b></p>`
+        }
     })
 }
 
@@ -199,6 +244,10 @@ formulario.addEventListener('submit', (evento) => {
     } else {
         const atividade = document.querySelector('select[name="tipoAtividade"]').value
 
+        calculaMei({
+            receitaBruta: faturamento,
+            tipoAtividade: atividade
+        })
         calculaSimplesNacional({
             receitaBruta: faturamento,
             tipoAtividade: atividade

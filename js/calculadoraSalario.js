@@ -16,6 +16,7 @@ let descontoINSSFerias = 0
 
 // Variáveis globais para o cálculo de PJ.
 let receitaBruta = 0
+let iss = 0
 let aliquota = 0
 let pd = 0
 let aliquotaEfetiva = 0
@@ -102,38 +103,53 @@ function calculaSalarioPJ(faturamento, tipo) {
         receitaBruta = receitaBruta * 12
     }
 
-    // No caso de CLT vamos considerar o regime tributário do Simples Nacional - Anexo V, pois é o mais comum.
-    if (receitaBruta <= 180000) {
-        aliquota = 0.155
-        pd = 0
-    } else if (receitaBruta <= 360000) {
-        aliquota = 0.18
-        pd = 4500.00
-    } else if (receitaBruta <= 720000) {
-        aliquota = 0.195
-        pd = 9900.00
-    } else if (receitaBruta <= 1800000) {
-        aliquota = 0.205
-        pd = 17100.00
-    } else if (receitaBruta <= 3600000) {
-        aliquota = 0.23
-        pd = 62100.00
+    if (receitaBruta <= 81000) {
+        let receitaBrutaMensal = receitaBruta / 12
+        inss = 66
+        iss = 5
+        ganhosLiquidos = (receitaBrutaMensal - (inss + iss))
+
+        return resultado.innerHTML += '<p><h3>PJ - MEI (Serviço)</h3></p>' +
+            '<p>Salário Bruto Mensal: R$ ' + (receitaBrutaMensal).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
+            `<br>(-) Contribuição MEI (${inss.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} de INSS + ${iss.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} de ISS): R$ ` + (inss + iss).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
+            '<br> -----------------------------------------' +
+            '<br>(=) Resultado: R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
+            ' ou R$ ' + (ganhosLiquidos * 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>'
+
     } else {
-        aliquota = 0.305
-        pd = 540000.00
+        // No caso de CLT vamos considerar o regime tributário do Simples Nacional - Anexo V, pois é o mais comum.
+        if (receitaBruta <= 180000) {
+            aliquota = 0.155
+            pd = 0
+        } else if (receitaBruta <= 360000) {
+            aliquota = 0.18
+            pd = 4500.00
+        } else if (receitaBruta <= 720000) {
+            aliquota = 0.195
+            pd = 9900.00
+        } else if (receitaBruta <= 1800000) {
+            aliquota = 0.205
+            pd = 17100.00
+        } else if (receitaBruta <= 3600000) {
+            aliquota = 0.23
+            pd = 62100.00
+        } else {
+            aliquota = 0.305
+            pd = 540000.00
+        }
+
+        aliquotaEfetiva = ((receitaBruta * aliquota) - pd) / receitaBruta
+        descontoPJ = receitaBruta * aliquotaEfetiva
+        ganhosLiquidos = receitaBruta - descontoPJ
+
+        return resultado.innerHTML += '<p><h3>PJ - Simples Nacional (Serviço)</h3></p>' +
+            '<p>Salário Bruto Mensal: R$ ' + (receitaBruta / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
+            `<br>(-) Contribuição Mensal MEI: R$ ` + (descontoPJ / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
+            '<br> -----------------------------------------' +
+            '<br>(=) Resultado: R$ ' + (ganhosLiquidos/12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
+            ' ou R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
+            '<br><p><i>*Para cálculo do PJ são utilizadas as aliquotas do Anexo V do Simples Nacional: aqui estão inseridas as empresas que prestam serviços de auditoria, jornalismo, tecnologia, publicidade, engenharia, entre outras.</i></p>'
     }
-
-    aliquotaEfetiva = ((receitaBruta * aliquota) - pd) / receitaBruta
-    descontoPJ = receitaBruta * aliquotaEfetiva
-    ganhosLiquidos = receitaBruta - descontoPJ
-
-    return resultado.innerHTML += '<p><h3>PJ - Serviço</h3></p>' +
-        '<p>Salário Bruto Mensal: R$ ' + (receitaBruta / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
-        `<br>(-) Simples Nacional (${(aliquotaEfetiva * 100).toFixed(2)}%): R$ ` + (descontoPJ / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
-        '<br> -----------------------------------------' +
-        '<br>(=) Resultado: R$ ' + (ganhosLiquidos/12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
-        ' ou R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
-        '<br><p><i>*Para cálculo do PJ são utilizadas as aliquotas do Anexo V do Simples Nacional: aqui estão inseridas as empresas que prestam serviços de auditoria, jornalismo, tecnologia, publicidade, engenharia, entre outras.</i></p>'
 }
 
 
