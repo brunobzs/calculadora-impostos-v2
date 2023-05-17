@@ -145,7 +145,7 @@ function calculaSalarioPJ(faturamento, tipo) {
 
         return resultado.innerHTML += '<p><h3>PJ - Simples Nacional (Serviço)</h3></p>' +
             '<p>Salário Bruto Mensal: R$ ' + (receitaBruta / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
-            `<br>(-) Contribuição Mensal MEI: R$ ` + (descontoPJ / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
+            `<br>(-) Simples Nacional (${(aliquotaEfetiva * 100).toFixed(2)}%): R$ ` + (descontoPJ / 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
             '<br> -----------------------------------------' +
             '<br>(=) Resultado: R$ ' + (ganhosLiquidos/12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/mês' +
             ' ou R$ ' + (ganhosLiquidos).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>' +
