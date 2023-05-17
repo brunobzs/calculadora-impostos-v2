@@ -79,7 +79,7 @@ function calculaSalarioCLT(salarioBruto, tipo) {
         '<br>(=) Salário Líquido: R$ ' + salarioLiquido.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</p>' +
         '<p>(+) 1/3 de Férias: R$ ' + umTercoFerias.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
         `<br>(-) IR sobre Férias (${(ir * 100).toFixed(2)}%): R$ ` + descontoIRFerias.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
-        `<br>(-) INSS sobre Férias (${(inss * 100).toFixed(2)}%): R$ ` + descontoIRFerias.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
+        `<br>(-) INSS sobre Férias (${(inss * 100).toFixed(2)}%): R$ ` + descontoINSSFerias.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
         '<br>(+) 13º com descontos: R$ ' + salarioLiquido.toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
         '<br> -----------------------------------------' +
         '<br>(=) Resultado: ' +
