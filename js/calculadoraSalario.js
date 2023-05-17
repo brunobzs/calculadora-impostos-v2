@@ -104,6 +104,7 @@ function calculaSalarioPJ(faturamento, tipo) {
     }
 
     if (receitaBruta <= 81000) {
+        // No caso de comparação com CLT, vamos considerar o regime tributário do MEI como serviço, pois é o mais comum.
         let receitaBrutaMensal = receitaBruta / 12
         inss = 66
         iss = 5
@@ -117,7 +118,7 @@ function calculaSalarioPJ(faturamento, tipo) {
             ' ou R$ ' + (ganhosLiquidos * 12).toLocaleString('pt-br', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '/ano </p>'
 
     } else {
-        // No caso de CLT vamos considerar o regime tributário do Simples Nacional - Anexo V, pois é o mais comum.
+        // No caso de comparação com CLT, vamos considerar o regime tributário do Simples Nacional - Anexo V, pois é o mais comum.
         if (receitaBruta <= 180000) {
             aliquota = 0.155
             pd = 0
